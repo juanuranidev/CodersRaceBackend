@@ -4,6 +4,6 @@ import mongoConnect from "./config/mongodb.js";
 
 mongoConnect();
 
-app.listen(env.app.port, () =>
-  console.log(`Listo por el puerto ${env.app.port}`)
-);
+const port = env.app.port ?? 1234;
+
+app.listen(port, () => console.log(`Listo por el puerto ${port}`));
