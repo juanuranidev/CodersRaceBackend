@@ -1,12 +1,13 @@
 import Code from "../models/code.model.js";
-import mongoose from "mongoose";
+import Language from "../models/language.model.js";
 
 class CodeRepository {
-  async getRandom(languageId) {
-    const randomCode = await Code.aggregate([
-      {
-        $match: { language: new mongoose.Types.ObjectId(languageId) },
-      },
+  async getRandom(languageName) {
+    const language = await Language.findOne({
+      name: new RegExp(languageName, "i"),
+    }).exec();
+
+    const codes = await Code.aggregate([
       {
         $lookup: {
           from: "languages",
@@ -18,12 +19,15 @@ class CodeRepository {
       {
         $unwind: "$language",
       },
+      {
+        $match: { language: language },
+      },
     ]).exec();
 
+    const randomCode = codes[Math.floor(Math.random() * codes.length)];
     return randomCode;
   }
   async create(code) {
-    console.log("CODE REPOSITORY", code);
     return await Code.create(code);
   }
 }

@@ -2,9 +2,9 @@ import codeService from "../services/code.services.js";
 
 class CodeController {
   async getRandom(req, res) {
-    const { languageId } = req.query;
+    const { languageName } = req.query;
 
-    const codes = await codeService.getRandom(languageId);
+    const codes = await codeService.getRandom(languageName);
     res.status(200).json(codes);
   }
   async create(req, res) {

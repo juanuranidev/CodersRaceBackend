@@ -1,15 +1,14 @@
 import languageRepository from "../repositories/code.repository.js";
 
 class CodeService {
-  async getRandom(languageId) {
+  async getRandom(languageName) {
     try {
-      return await languageRepository.getRandom(languageId);
+      return await languageRepository.getRandom(languageName);
     } catch (error) {
       throw new Error(error);
     }
   }
   async create(code) {
-    console.log("CODE SERVICE", code);
     try {
       return await languageRepository.create(code);
     } catch (error) {
