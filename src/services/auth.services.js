@@ -3,7 +3,7 @@ import authRepository from "../repositories/auth.repository.js";
 class AuthService {
   async login(profile) {
     try {
-      return await authRepository.getRandom(profile);
+      return await authRepository.login(profile);
     } catch (error) {
       throw new Error(error);
     }
