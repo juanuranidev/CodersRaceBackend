@@ -1,6 +1,17 @@
+import User from "../models/user.model.js";
+
 class AuthRepository {
   async login(profile) {
-    console.log(profile);
+    const userAlreadyExist = await User.findOne({
+      githubId: profile.githubId,
+    }).exec();
+
+    if (!userAlreadyExist) {
+      const newUser = await User.create(profile);
+      return newUser;
+    }
+    console.log(userAlreadyExist);
+    return userAlreadyExist;
   }
 }
 

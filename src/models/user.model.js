@@ -3,22 +3,18 @@ import mongoose, { Schema, model } from "mongoose";
 const UserSchema = new Schema(
   {
     name: {
-      type: Sring,
+      type: String,
       required: [true, "The name is required"],
     },
     image: {
       type: String,
     },
-    accessToken: {
-      type: Sring,
-      required: [true, "The access token is required"],
-    },
     githubUsername: {
-      type: Sring,
+      type: String,
       required: [true, "The github username is required"],
     },
     githubId: {
-      type: Sring,
+      type: String,
       required: [true, "The github id is required"],
     },
   },
