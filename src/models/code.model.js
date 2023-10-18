@@ -8,6 +8,7 @@ const CodeSchema = new Schema(
     },
     language: {
       type: mongoose.Types.ObjectId,
+      ref: "Language",
     },
   },
   {
