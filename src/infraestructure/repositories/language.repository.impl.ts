@@ -11,6 +11,7 @@ export class LanguageRepositoryImpl implements LanguageRepository {
 
       return languages.map((language) => LanguageEntity.fromObject(language));
     } catch (error) {
+      console.log(error);
       throw new Error("Method not implemented.");
     }
   }
