@@ -24,7 +24,7 @@ model Code {
   text  String
   races Race[]
 
-  Language   Language? @relation(fields: [languageId], references: [id])
+  language   Language? @relation(fields: [languageId], references: [id])
   languageId Int?
 }
 
@@ -40,6 +40,6 @@ model Race {
   userId   Int?
   cpm      Int
   timeInMs Int
-  Code     Code? @relation(fields: [codeId], references: [id])
+  code     Code? @relation(fields: [codeId], references: [id])
   codeId   Int?
 }
