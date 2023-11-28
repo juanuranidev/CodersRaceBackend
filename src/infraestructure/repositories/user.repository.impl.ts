@@ -33,4 +33,32 @@ export class UserRepositoryImpl implements UserRepository {
       throw error;
     }
   }
+  async getByGithubId(id: string): Promise<UserEntity | undefined> {
+    try {
+      const user = await db.user.findFirst({
+        where: {
+          githubId: id,
+        },
+      });
+
+      if (!user) {
+        return undefined;
+      }
+
+      return UserEntity.fromObject(user);
+    } catch (error) {
+      throw error;
+    }
+  }
+  async getUserLeaderboard(): Promise<UserEntity[] | undefined> {
+    try {
+      const users = await db.user.findMany({
+        orderBy: {},
+      });
+
+      return users.map((user) => UserEntity.fromObject(user));
+    } catch (error) {
+      throw new Error("OIAWDNBAIO");
+    }
+  }
 }
