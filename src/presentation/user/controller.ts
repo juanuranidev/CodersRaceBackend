@@ -23,10 +23,10 @@ export class UserController {
     const id = +req.params.id;
 
     if (!id) {
-      res.status(400).json({ error: "Id not found" });
+      return res.status(400).json({ error: "Id not found" });
     }
 
-    await new GetUserById(this.userRepository)
+    return new GetUserById(this.userRepository)
       .execute(Number(id))
       .then((user) => res.json(user))
       .catch((error) => res.status(400).json({ error }));
