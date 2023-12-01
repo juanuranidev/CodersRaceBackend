@@ -10,7 +10,8 @@ export class UserRoutes {
     const userController = new UserController(userRepository);
 
     router.post("/", userController.createUser);
-    router.get("/:id", userController.getUserById);
+    router.get("/get/:id", userController.getUserById);
+    router.get("/leaderboard", userController.getUsersLeaderboard);
 
     return router;
   }

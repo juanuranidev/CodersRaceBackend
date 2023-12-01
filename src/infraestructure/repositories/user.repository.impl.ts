@@ -23,11 +23,9 @@ export class UserRepositoryImpl implements UserRepository {
           id: id,
         },
       });
-
       if (!user) {
         throw "AIOUWDBN";
       }
-
       return UserEntity.fromObject(user);
     } catch (error) {
       throw error;
@@ -50,15 +48,45 @@ export class UserRepositoryImpl implements UserRepository {
       throw error;
     }
   }
-  async getUserLeaderboard(): Promise<UserEntity[] | undefined> {
+  async getUsersLeaderboard(): Promise<UserEntity[]> {
     try {
       const users = await db.user.findMany({
-        orderBy: {},
+        include: {
+          races: true,
+        },
       });
+      console.log(users);
 
-      return users.map((user) => UserEntity.fromObject(user));
+      const leaderboard = await Promise.all(
+        users.map(async (user) => {
+          const totalRaces = user.races.length;
+          const totalCpm = user.races.reduce((sum, race) => sum + race.cpm, 0);
+          const averageCpm = totalRaces > 0 ? totalCpm / totalRaces : 0;
+
+          const mostUsedLanguage = await db.race.groupBy({
+            by: ["codeId"],
+            _count: { codeId: true },
+            // code: { select: { language: true } },
+          });
+          // .orderBy({
+          //   _count: { codeId: 'desc' },
+          // })
+          // .first();
+
+          return {
+            userId: user.id,
+            userName: user.name,
+            averageCpm,
+            totalRaces,
+            // : mostUsedLanguage?.code?.language.name || "",
+          };
+        })
+      );
+      console.log(leaderboard);
+      return [];
+      // return users.map((user) => UserEntity.fromObject(user));
     } catch (error) {
-      throw new Error("OIAWDNBAIO");
+      throw new Error("Method not implemented.");
     }
   }
 }

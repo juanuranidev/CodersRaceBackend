@@ -1,21 +1,21 @@
 export class UserEntity {
   constructor(
-    public id: number,
     public name: string,
     public image: string,
     public githubUsername: string,
-    public githubId: string
+    public githubId: string,
+    public id: number
   ) {}
 
   public static fromObject(object: { [key: string]: any }): UserEntity {
-    const { id, name, image, githubUsername, githubId } = object;
+    const { name, image, githubUsername, githubId, id } = object;
 
-    if (!id) throw "id is required";
     if (!name) throw "name is required";
     if (!image) throw "image is required";
     if (!githubUsername) throw "githubUsername is required";
     if (!githubId) throw "githubID is required";
+    if (!id) throw "id is required";
 
-    return new UserEntity(id, name, image, githubUsername, githubId);
+    return new UserEntity(name, image, githubUsername, githubId, id);
   }
 }
