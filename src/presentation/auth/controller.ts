@@ -26,6 +26,6 @@ export class AuthController {
         .catch((error) => res.status(400).json({ error }));
     }
 
-    return res.status(200).json(userDto);
+    return res.status(200).json(userExist);
   };
 }
