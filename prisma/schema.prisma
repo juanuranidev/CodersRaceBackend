@@ -16,7 +16,7 @@ model User {
   image          String
   githubUsername String
   githubId       String @unique
-  race           Race[]
+  races          Race[]
 }
 
 model Code {
