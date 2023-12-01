@@ -8,7 +8,6 @@ export class RaceController {
   constructor(private readonly raceRepository: RaceRepository) {}
 
   public createRace = async (req: Request, res: Response) => {
-    console.log(req.body);
     const [error, raceDto] = CreateRaceDto.create(req.body);
 
     if (error) {

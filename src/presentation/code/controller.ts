@@ -12,7 +12,7 @@ export class CodeController {
   public getRandomCode = async (req: Request, res: Response) => {
     const { language } = req.query;
     if (!language) {
-      res.status(400).json("ERRROR");
+      return res.status(400).json("ERRROR");
     }
 
     const languageEntity: any = await new GetLanguageByName(
@@ -21,7 +21,7 @@ export class CodeController {
       .execute(String(language))
       .catch((error) => res.status(400).json({ error }));
 
-    new GetRandomCode(this.codeRepository)
+    return new GetRandomCode(this.codeRepository)
       .execute(languageEntity)
       .then((randomCode) => res.status(200).json(randomCode))
       .catch((error) => res.status(400).json({ error }));
