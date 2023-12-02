@@ -27,4 +27,38 @@ export class RaceRepositoryImpl implements RaceRepository {
       throw new Error(error);
     }
   }
+  async getById(id: number): Promise<RaceEntity> {
+    try {
+      const race = await db.race.findFirst({
+        where: {
+          id: id,
+        },
+        include: {
+          code: {
+            include: {
+              language: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!race) {
+        throw "race not found";
+      }
+
+      return RaceEntity.fromObject({
+        ...race,
+        user: race.userId,
+        code: race.code!.text,
+        language: race.code!.language!.name,
+      });
+    } catch (error) {
+      console.log({ error });
+      throw new Error("Method not implemented.");
+    }
+  }
 }
