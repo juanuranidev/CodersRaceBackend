@@ -8,6 +8,7 @@ export interface CreateRaceInterface {
 
 export class CreateRace implements CreateRaceInterface {
   constructor(private readonly repository: RaceRepository) {}
+
   execute(race: CreateRaceDto): Promise<RaceEntity> {
     return this.repository.create(race);
   }
