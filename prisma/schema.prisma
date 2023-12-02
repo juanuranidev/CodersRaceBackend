@@ -11,12 +11,14 @@ datasource db {
 }
 
 model User {
-  id             Int    @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   name           String
   image          String
   githubUsername String
-  githubId       String @unique
+  githubId       String   @unique
   races          Race[]
+  updatedAt      DateTime @updatedAt
+  createdAt      DateTime @default(now())
 }
 
 model Code {
@@ -35,11 +37,13 @@ model Language {
 }
 
 model Race {
-  id       Int   @id @default(autoincrement())
-  user     User? @relation(fields: [userId], references: [id])
-  userId   Int?
-  cpm      Int
-  timeInMs Int
-  code     Code? @relation(fields: [codeId], references: [id])
-  codeId   Int?
+  id        Int      @id @default(autoincrement())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    Int?
+  cpm       Int
+  timeInMs  Int
+  code      Code?    @relation(fields: [codeId], references: [id])
+  codeId    Int?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
