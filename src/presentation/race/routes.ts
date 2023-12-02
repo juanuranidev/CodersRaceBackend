@@ -10,6 +10,7 @@ export class RaceRoutes {
     const raceController = new RaceController(raceRepository);
 
     router.post("/", raceController.createRace);
+    router.get("/get/:id", raceController.getById);
 
     return router;
   }
