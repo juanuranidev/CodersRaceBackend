@@ -5,11 +5,22 @@ export class UserEntity {
     public githubUsername: string,
     public githubId: string,
     public id: number,
-    public averageCpm?: number
+    public averageCpm?: number,
+    public races?: number,
+    public mostLanguageUsed?: string
   ) {}
 
   public static fromObject(object: { [key: string]: any }): UserEntity {
-    const { name, image, githubUsername, githubId, id, averageCpm } = object;
+    const {
+      id,
+      name,
+      image,
+      races,
+      githubId,
+      averageCpm,
+      githubUsername,
+      mostLanguageUsed,
+    } = object;
 
     if (!name) throw "name is required";
     if (!image) throw "image is required";
@@ -23,7 +34,9 @@ export class UserEntity {
       githubUsername,
       githubId,
       id,
-      averageCpm
+      averageCpm,
+      races,
+      mostLanguageUsed
     );
   }
 }
