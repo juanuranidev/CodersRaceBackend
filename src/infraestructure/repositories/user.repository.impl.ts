@@ -41,34 +41,34 @@ export class UserRepositoryImpl implements UserRepository {
         throw "AIOUWDBN";
       }
 
-      const mostCodeUsed = await db.race.groupBy({
-        by: ["codeId"],
-        where: {
-          userId: id,
-        },
-        orderBy: {
-          _count: {
-            codeId: "desc",
-          },
-        },
-      });
+      // const mostCodeUsed = await db.race.groupBy({
+      //   by: ["codeId"],
+      //   where: {
+      //     userId: id,
+      //   },
+      //   orderBy: {
+      //     _count: {
+      //       codeId: "desc",
+      //     },
+      //   },
+      // });
 
-      const code = await db.code.findFirst({
-        where: {
-          id: mostCodeUsed[0].codeId!,
-        },
-        include: {
-          language: true,
-        },
-      });
+      // const code = await db.code.findFirst({
+      //   where: {
+      //     id: mostCodeUsed[0].codeId!,
+      //   },
+      //   include: {
+      //     language: true,
+      //   },
+      // });
 
-      const mostLanguageUsed = code?.language?.name;
+      // const mostLanguageUsed = code?.language?.name;
 
       return UserEntity.fromObject({
         ...user,
         races: user?._count.races,
         averageCpm: averageUserCpm[0]._avg.cpm,
-        mostLanguageUsed: mostLanguageUsed,
+        // mostLanguageUsed: mostLanguageUsed,
       });
     } catch (error) {
       throw error;
