@@ -9,6 +9,6 @@ export class GetUserLeaderboard implements GetUserLeaderboardInterface {
   constructor(public readonly repository: UserRepository) {}
 
   execute(): Promise<UserEntity[] | undefined> {
-    return this.repository.getUserLeaderboard();
+    return this.repository.getUsersLeaderboard();
   }
 }
