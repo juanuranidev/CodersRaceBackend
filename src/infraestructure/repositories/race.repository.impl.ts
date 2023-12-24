@@ -24,6 +24,7 @@ export class RaceRepositoryImpl implements RaceRepository {
         timeInMs: raceCreated.timeInMs,
       });
     } catch (error: any) {
+      console.log("ERROOOROR", error);
       throw new Error(error);
     }
   }
