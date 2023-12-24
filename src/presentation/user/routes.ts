@@ -9,7 +9,6 @@ export class UserRoutes {
     const userRepository = new UserRepositoryImpl();
     const userController = new UserController(userRepository);
 
-    router.post("/", userController.createUser);
     router.get("/get/:id", userController.getUserById);
     router.get("/leaderboard", userController.getUsersLeaderboard);
 

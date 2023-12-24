@@ -1,24 +1,10 @@
 import { Request, Response } from "express";
-import { CreateUserDto } from "../../domain/dtos/user";
 import { UserRepository } from "../../domain/repositories";
-import { CreateUser, GetUserById } from "../../domain/use-cases/user";
+import { GetUserById } from "../../domain/use-cases/user";
 import { GetUsersLeaderboard } from "../../domain/use-cases/user/get-users-leaderboard";
 
 export class UserController {
   constructor(private readonly userRepository: UserRepository) {}
-
-  public createUser = async (req: Request, res: Response) => {
-    const [error, userDto] = CreateUserDto.create(req.body);
-
-    if (error) {
-      return res.status(400).json({ error: error });
-    }
-
-    await new CreateUser(this.userRepository)
-      .execute(userDto!)
-      .then((user) => res.json(user))
-      .catch((error) => res.status(400).json({ error }));
-  };
   public getUserById = async (req: Request, res: Response) => {
     const id = +req.params.id;
 

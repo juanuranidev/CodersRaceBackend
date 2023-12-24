@@ -11,6 +11,7 @@ export class CodeController {
 
   public getRandomCode = async (req: Request, res: Response) => {
     const { language } = req.query;
+    console.log({ language });
     if (!language) {
       return res.status(400).json("ERRROR");
     }

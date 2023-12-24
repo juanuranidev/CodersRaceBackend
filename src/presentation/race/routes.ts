@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { RaceController } from "./controller";
 import { RaceRepositoryImpl } from "../../infraestructure/repositories";
+import { AuthMiddleware } from "../middleware/auth.middleware";
 
 export class RaceRoutes {
   static get routes(): Router {
@@ -9,8 +10,12 @@ export class RaceRoutes {
     const raceRepository = new RaceRepositoryImpl();
     const raceController = new RaceController(raceRepository);
 
-    router.post("/", raceController.createRace);
-    router.get("/get/:id", raceController.getById);
+    router.post("/", [AuthMiddleware.validateJWT], raceController.createRace);
+    router.get(
+      "/get/:id",
+      [AuthMiddleware.validateJWT],
+      raceController.getById
+    );
 
     return router;
   }
