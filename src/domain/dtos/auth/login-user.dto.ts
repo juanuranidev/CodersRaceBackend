@@ -1,4 +1,4 @@
-export class CreateUserDto {
+export class LoginUserDto {
   private constructor(
     public readonly name: string,
     public readonly image: string,
@@ -6,7 +6,7 @@ export class CreateUserDto {
     public readonly githubId: string
   ) {}
 
-  static create(props: { [key: string]: any }): [string?, CreateUserDto?] {
+  static create(props: { [key: string]: any }): [string?, LoginUserDto?] {
     const { name, image, githubUsername, githubId } = props;
 
     if (!name) return ["Name is required", undefined];
@@ -14,9 +14,6 @@ export class CreateUserDto {
     if (!githubUsername) return ["GithubUsername is required", undefined];
     if (!githubId) return ["GithubId is required", undefined];
 
-    return [
-      undefined,
-      new CreateUserDto(name, image, githubUsername, githubId),
-    ];
+    return [undefined, new LoginUserDto(name, image, githubUsername, githubId)];
   }
 }

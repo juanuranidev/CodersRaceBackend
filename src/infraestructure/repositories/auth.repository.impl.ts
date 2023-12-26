@@ -1,10 +1,10 @@
 import { envs } from "../../config";
-import { JWTAdapter } from "../../config/adapters/jwt.adapter";
-import { LoginUserDto } from "../../domain/dtos/auth/login-user.dto";
-import { UserEntity } from "../../domain/entities";
-import { CustomError } from "../../domain/errors";
-import { AuthRepository } from "../../domain/repositories";
 import { PrismaDb } from "../db/prisma";
+import { JWTAdapter } from "../../config/adapters/jwt.adapter";
+import { UserEntity } from "../../domain/entities/user.entity";
+import { CustomError } from "../../domain/errors/custom.error";
+import { LoginUserDto } from "../../domain/dtos/auth/login-user.dto";
+import { AuthRepository } from "../../domain/repositories/auth.repository";
 
 const db = PrismaDb.execute();
 
@@ -25,7 +25,6 @@ export class AuthRepositoryImpl implements AuthRepository {
         id: user.id,
         githubId: user.githubId,
       });
-      console.log(token);
       if (!token) throw CustomError.internalServer("Error while creating JWT");
 
       return {
@@ -33,7 +32,7 @@ export class AuthRepositoryImpl implements AuthRepository {
         token: token,
       };
     } catch (error) {
-      throw CustomError.internalServer(`${error}`);
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { LanguageController } from "./controller";
-import { LanguageRepositoryImpl } from "../../infraestructure/repositories";
+import { LanguageRepositoryImpl } from "../../infraestructure/repositories/language.repository.impl";
 export class LanguageRoutes {
   static get routes(): Router {
     const router = Router();

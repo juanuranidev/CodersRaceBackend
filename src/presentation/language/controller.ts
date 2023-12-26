@@ -1,14 +1,23 @@
+import { CustomError } from "../../domain/errors/custom.error";
 import { GetLanguages } from "../../domain/use-cases";
 import { Request, Response } from "express";
-import { LanguageRepository } from "../../domain/repositories";
+import { LanguageRepository } from "../../domain/repositories/language.repository";
 
 export class LanguageController {
   constructor(private readonly languageRepository: LanguageRepository) {}
 
+  private handleError = (error: unknown, res: Response) => {
+    if (error instanceof CustomError) {
+      return res.status(error.statusCode).json({ error: error.message });
+    }
+    console.log(`${error}`);
+    return res.status(500).json({ error: "Internal server error" });
+  };
+
   public getLanguages = async (req: Request, res: Response) => {
-    new GetLanguages(this.languageRepository)
+    return new GetLanguages(this.languageRepository)
       .execute()
       .then((languages) => res.status(200).json(languages))
-      .catch((error) => res.status(400).json(error));
+      .catch((error) => this.handleError(error, res));
   };
 }

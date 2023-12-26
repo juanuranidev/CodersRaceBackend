@@ -1,6 +1,7 @@
-import { LanguageEntity } from "../../domain/entities";
-import { LanguageRepository } from "../../domain/repositories";
 import { PrismaDb } from "../db/prisma";
+import { LanguageEntity } from "../../domain/entities/language.entity";
+import { LanguageRepository } from "../../domain/repositories/language.repository";
+import { CustomError } from "../../domain/errors/custom.error";
 
 const db = PrismaDb.execute();
 
@@ -8,11 +9,13 @@ export class LanguageRepositoryImpl implements LanguageRepository {
   async getAll(): Promise<LanguageEntity[]> {
     try {
       const languages = await db.language.findMany();
+      if (!languages.length) {
+        return [];
+      }
 
       return languages.map((language) => LanguageEntity.fromObject(language));
     } catch (error) {
-      console.log(error);
-      throw new Error("Method not implemented.");
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
   async getByName(name: string): Promise<LanguageEntity> {
@@ -24,12 +27,12 @@ export class LanguageRepositoryImpl implements LanguageRepository {
       });
 
       if (!language) {
-        throw new Error("Error");
+        throw CustomError.notFound("Language not found");
       }
 
       return LanguageEntity.fromObject(language);
     } catch (error) {
-      throw new Error("error");
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
 }

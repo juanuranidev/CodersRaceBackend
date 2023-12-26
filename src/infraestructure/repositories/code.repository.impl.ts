@@ -1,6 +1,8 @@
-import { CodeEntity, LanguageEntity } from "../../domain/entities";
-import { CodeRepository } from "../../domain/repositories";
 import { PrismaDb } from "../db/prisma";
+import { CodeEntity } from "../../domain/entities/code.entity";
+import { LanguageEntity } from "../../domain/entities/language.entity";
+import { CodeRepository } from "../../domain/repositories/code.repository";
+import { CustomError } from "../../domain/errors/custom.error";
 
 const db = PrismaDb.execute();
 
@@ -12,20 +14,19 @@ export class CodeRepositoryImpl implements CodeRepository {
           languageId: language.id,
         },
       });
-      console.log({ codes });
       if (!codes) {
-        throw new Error("ERROR");
+        return [];
       }
 
       const codeSelected = codes[Math.floor(Math.random() * codes.length)];
+
       return CodeEntity.fromObject({
         language,
         id: codeSelected.id,
         text: codeSelected.text,
       });
     } catch (error) {
-      console.log({ error });
-      throw new Error("Method not implemented.");
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
 }

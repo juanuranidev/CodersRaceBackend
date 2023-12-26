@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { RaceController } from "./controller";
-import { RaceRepositoryImpl } from "../../infraestructure/repositories";
+import { RaceRepositoryImpl } from "../../infraestructure/repositories/race.repository.impl";
 import { AuthMiddleware } from "../middleware/auth.middleware";
 
 export class RaceRoutes {

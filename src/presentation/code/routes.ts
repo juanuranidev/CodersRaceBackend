@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { CodeRepositoryImpl } from "../../infraestructure/repositories";
-import { LanguageRepositoryImpl } from "../../infraestructure/repositories/language.repository.impl";
 import { CodeController } from "./controller";
+import { CodeRepositoryImpl } from "../../infraestructure/repositories/code.repository.impl";
+import { LanguageRepositoryImpl } from "../../infraestructure/repositories/language.repository.impl";
 
 export class CodeRoutes {
   static get routes(): Router {

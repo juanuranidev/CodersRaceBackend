@@ -1,5 +1,6 @@
-import { UserEntity } from "../../domain/entities";
-import { UserRepository } from "../../domain/repositories";
+import { UserEntity } from "../../domain/entities/user.entity";
+import { CustomError } from "../../domain/errors/custom.error";
+import { UserRepository } from "../../domain/repositories/user.repository";
 import { PrismaDb } from "../db/prisma";
 
 const db = PrismaDb.execute();
@@ -14,6 +15,9 @@ export class UserRepositoryImpl implements UserRepository {
           id: id,
         },
       });
+      if (!user) {
+        throw CustomError.notFound("User not found");
+      }
 
       const averageUserCpm = await db.race.groupBy({
         by: ["userId"],
@@ -25,41 +29,13 @@ export class UserRepositoryImpl implements UserRepository {
         },
       });
 
-      if (!user) {
-        throw "AIOUWDBN";
-      }
-
-      // const mostCodeUsed = await db.race.groupBy({
-      //   by: ["codeId"],
-      //   where: {
-      //     userId: id,
-      //   },
-      //   orderBy: {
-      //     _count: {
-      //       codeId: "desc",
-      //     },
-      //   },
-      // });
-
-      // const code = await db.code.findFirst({
-      //   where: {
-      //     id: mostCodeUsed[0].codeId!,
-      //   },
-      //   include: {
-      //     language: true,
-      //   },
-      // });
-
-      // const mostLanguageUsed = code?.language?.name;
-
       return UserEntity.fromObject({
         ...user,
         races: user?._count.races,
-        averageCpm: averageUserCpm[0]._avg.cpm,
-        // mostLanguageUsed: mostLanguageUsed,
+        averageCpm: averageUserCpm.length ? averageUserCpm[0]._avg.cpm : 0,
       });
     } catch (error) {
-      throw error;
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
   async getByGithubId(id: string): Promise<UserEntity | undefined> {
@@ -69,19 +45,22 @@ export class UserRepositoryImpl implements UserRepository {
           githubId: id,
         },
       });
-
       if (!user) {
-        return undefined;
+        throw CustomError.notFound("User not found");
       }
 
       return UserEntity.fromObject(user);
     } catch (error) {
-      throw error;
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
   async getUsersLeaderboard(): Promise<UserEntity[]> {
     try {
       const users = await db.user.findMany();
+      if (!users.length) {
+        return [];
+      }
+
       const racesOrderByAverageCpm = await db.race.groupBy({
         by: ["userId"],
         _avg: {
@@ -110,8 +89,7 @@ export class UserRepositoryImpl implements UserRepository {
 
       return usersWithAverageCpm.map((user) => UserEntity.fromObject(user));
     } catch (error) {
-      console.log(error);
-      throw new Error("Method not implemented.");
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
 }

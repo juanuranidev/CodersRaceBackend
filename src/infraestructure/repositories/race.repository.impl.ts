@@ -1,7 +1,8 @@
-import { CreateRaceDto } from "../../domain/dtos/race";
-import { RaceEntity } from "../../domain/entities";
-import { RaceRepository } from "../../domain/repositories";
 import { PrismaDb } from "../db/prisma";
+import { RaceEntity } from "../../domain/entities/race.entity";
+import { CreateRaceDto } from "../../domain/dtos/race/create-race.dto";
+import { RaceRepository } from "../../domain/repositories/race.repository";
+import { CustomError } from "../../domain/errors/custom.error";
 
 const db = PrismaDb.execute();
 
@@ -24,8 +25,7 @@ export class RaceRepositoryImpl implements RaceRepository {
         timeInMs: raceCreated.timeInMs,
       });
     } catch (error: any) {
-      console.log("ERROOOROR", error);
-      throw new Error(error);
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
   async getById(id: number): Promise<RaceEntity> {
@@ -46,9 +46,8 @@ export class RaceRepositoryImpl implements RaceRepository {
           },
         },
       });
-
       if (!race) {
-        throw "race not found";
+        throw CustomError.notFound("Race not found");
       }
 
       return RaceEntity.fromObject({
@@ -58,8 +57,7 @@ export class RaceRepositoryImpl implements RaceRepository {
         language: race.code!.language!.name,
       });
     } catch (error) {
-      console.log({ error });
-      throw new Error("Method not implemented.");
+      throw CustomError.internalServer(`Error: ${error}`);
     }
   }
 }

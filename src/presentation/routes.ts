@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { CodeRoutes } from "./code/routes";
 import { UserRoutes } from "./user/routes";
-import { LanguageRoutes } from "./language/routes";
 import { AuthRoutes } from "./auth/routes";
 import { RaceRoutes } from "./race/routes";
+import { LanguageRoutes } from "./language/routes";
 
 export class AppRoutes {
   static get routes(): Router {
