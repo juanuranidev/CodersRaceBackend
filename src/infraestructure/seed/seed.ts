@@ -27,7 +27,6 @@ async function createLanguages() {
       if (!languageExist) {
         await db.language.create({ data: language });
       }
-      console.log(language);
     }
   } catch (error) {
     throw CustomError.internalServer(`Error. ${error}`);
@@ -43,16 +42,24 @@ async function createJavaScriptCodes() {
       },
     });
 
-    for (const javaSriptCode of javaScriptCodes) {
-      await db.code.create({
-        data: {
-          text: javaSriptCode,
-          language: { connect: { id: language.id } },
+    for (const javaScriptCode of javaScriptCodes) {
+      const exist = await db.code.findFirst({
+        where: {
+          text: javaScriptCode,
         },
       });
+
+      if (!exist) {
+        await db.code.create({
+          data: {
+            text: javaScriptCode,
+            language: { connect: { id: language.id } },
+          },
+        });
+      }
     }
 
-    console.log("Códigos de python creados con éxito");
+    console.log("Códigos de javascript creados con éxito");
   } catch (error) {
     throw CustomError.internalServer(`Error. ${error}`);
   }
@@ -67,12 +74,20 @@ async function createTypeScriptCodes() {
     });
 
     for (const typeScriptCode of typeScriptCodes) {
-      await db.code.create({
-        data: {
+      const exist = await db.code.findFirst({
+        where: {
           text: typeScriptCode,
-          language: { connect: { id: language.id } },
         },
       });
+
+      if (!exist) {
+        await db.code.create({
+          data: {
+            text: typeScriptCode,
+            language: { connect: { id: language.id } },
+          },
+        });
+      }
     }
 
     console.log("Códigos de typescript creados con éxito");
@@ -90,12 +105,20 @@ async function createPythonCodes() {
     });
 
     for (const pythonCode of pythonCodes) {
-      await db.code.create({
-        data: {
+      const exist = await db.code.findFirst({
+        where: {
           text: pythonCode,
-          language: { connect: { id: language.id } },
         },
       });
+
+      if (!exist) {
+        await db.code.create({
+          data: {
+            text: pythonCode,
+            language: { connect: { id: language.id } },
+          },
+        });
+      }
     }
 
     console.log("Códigos de python creados con éxito");
