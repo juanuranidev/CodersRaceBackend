@@ -32,7 +32,7 @@ model Code {
 
 model Language {
   id    Int    @id @default(autoincrement())
-  name  String
+  name  String @unique
   codes Code[]
 }
 
