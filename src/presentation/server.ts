@@ -28,7 +28,7 @@ export class Server {
     this.app.use(compression());
     this.app.use(
       cors({
-        origin: "*",
+        origin: "https://coders-race.vercel.app/",
       })
     );
 
