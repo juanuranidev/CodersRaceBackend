@@ -26,7 +26,11 @@ export class Server {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(compression());
-    this.app.use(cors());
+    this.app.use(
+      cors({
+        origin: "https://coders-race.vercel.app/",
+      })
+    );
 
     //* Routes
     this.app.use(this.routes);
