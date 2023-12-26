@@ -1,5 +1,5 @@
 import { CustomError } from "../../domain/errors/custom.error";
-import { GetLanguages } from "../../domain/use-cases";
+import { GetLanguages } from "../../domain/use-cases/language/get-languages";
 import { Request, Response } from "express";
 import { LanguageRepository } from "../../domain/repositories/language.repository";
 

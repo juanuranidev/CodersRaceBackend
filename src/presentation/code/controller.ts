@@ -25,7 +25,9 @@ export class CodeController {
       return CustomError.badRequest("Language is required");
     }
 
-    const languageEntity = await new GetLanguageByName(this.languageRepository)
+    const languageEntity: any = await new GetLanguageByName(
+      this.languageRepository
+    )
       .execute(String(language))
       .catch((error) => this.handleError(error, res));
 

@@ -1,5 +1,5 @@
-import { RaceEntity } from "../../entities";
-import { RaceRepository } from "../../repositories";
+import { RaceEntity } from "../../entities/race.entity";
+import { RaceRepository } from "../../repositories/race.repository";
 
 export interface GetRaceByIdInterface {
   execute(id: number): Promise<RaceEntity>;

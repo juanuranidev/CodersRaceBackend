@@ -1,6 +1,6 @@
-import { RaceEntity } from "../../entities";
-import { CreateRaceDto } from "../../dtos/race";
-import { RaceRepository } from "../../repositories";
+import { RaceEntity } from "../../entities/race.entity";
+import { CreateRaceDto } from "../../dtos/race/create-race.dto";
+import { RaceRepository } from "../../repositories/race.repository";
 
 export interface CreateRaceInterface {
   execute(race: CreateRaceDto): Promise<RaceEntity>;

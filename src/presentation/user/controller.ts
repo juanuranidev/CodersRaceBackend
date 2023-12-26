@@ -1,5 +1,5 @@
 import { CustomError } from "../../domain/errors/custom.error";
-import { GetUserById } from "../../domain/use-cases/user";
+import { GetUserById } from "../../domain/use-cases/user/get-by-id";
 import { UserRepository } from "../../domain/repositories/user.repository";
 import { Request, Response } from "express";
 import { GetUsersLeaderboard } from "../../domain/use-cases/user/get-users-leaderboard";

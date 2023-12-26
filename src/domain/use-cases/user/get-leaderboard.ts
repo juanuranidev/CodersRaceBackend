@@ -1,5 +1,5 @@
-import { UserEntity } from "../../entities";
-import { UserRepository } from "../../repositories";
+import { UserEntity } from "../../entities/user.entity";
+import { UserRepository } from "../../repositories/user.repository";
 
 export interface GetUserLeaderboardInterface {
   execute(): Promise<UserEntity[] | undefined>;

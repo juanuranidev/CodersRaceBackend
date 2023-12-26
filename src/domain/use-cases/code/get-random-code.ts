@@ -1,5 +1,6 @@
-import { CodeEntity, LanguageEntity } from "../../entities";
-import { CodeRepository } from "../../repositories";
+import { CodeEntity } from "../../entities/code.entity";
+import { LanguageEntity } from "../../entities/language.entity";
+import { CodeRepository } from "../../repositories/code.repository";
 
 export interface GetRandomCodeInterface {
   execute(language: LanguageEntity): Promise<CodeEntity>;

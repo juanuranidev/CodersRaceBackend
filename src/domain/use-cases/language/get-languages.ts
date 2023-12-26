@@ -1,5 +1,5 @@
-import { LanguageEntity } from "../../entities";
-import { LanguageRepository } from "../../repositories";
+import { LanguageEntity } from "../../entities/language.entity";
+import { LanguageRepository } from "../../repositories/language.repository";
 
 export interface GetLanguagesInterface {
   execute(): Promise<LanguageEntity[]>;

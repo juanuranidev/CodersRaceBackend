@@ -1,6 +1,6 @@
+import { UserEntity } from "../../entities/user.entity";
 import { LoginUserDto } from "../../dtos/auth/login-user.dto";
-import { UserEntity } from "../../entities";
-import { AuthRepository } from "../../repositories";
+import { AuthRepository } from "../../repositories/auth.repository";
 
 export interface LoginInterface {
   execute(user: UserEntity): Promise<UserEntity>;
