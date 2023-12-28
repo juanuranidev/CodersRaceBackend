@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
 import { LoginUser } from "../../domain/use-cases/auth/login-user";
 import { CustomError } from "../../domain/errors/custom.error";
 import { LoginUserDto } from "../../domain/dtos/auth/login-user.dto";
 import { AuthRepository } from "../../domain/repositories/auth.repository";
+import { Request, Response } from "express";
 
 export class AuthController {
   constructor(private readonly authRepository: AuthRepository) {}
