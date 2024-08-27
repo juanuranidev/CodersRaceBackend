@@ -22,7 +22,6 @@ export class Server {
   }
 
   async start() {
-    //* Middlewares
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(compression());
@@ -32,9 +31,7 @@ export class Server {
       })
     );
 
-    //* Routes
     this.app.use(this.routes);
-
     this.dbClient.execute();
 
     this.app.listen(this.port, () => {
